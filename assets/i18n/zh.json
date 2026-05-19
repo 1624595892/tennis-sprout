@@ -1,0 +1,159 @@
+{
+  "app_name": "网球日志",
+  "app_name_sub": "TennisSprout",
+
+  "bottom_nav": {
+    "home": "首页",
+    "vocab": "词汇学堂",
+    "practice": "训练",
+    "match": "比赛",
+    "insights": "分析"
+  },
+
+  "daily_status": {
+    "title": "今日状态",
+    "upload_photo": "上传照片",
+    "upload_hint": "记录今天的网球心情吧 📸",
+    "streak_count": "连续打卡",
+    "day": "天",
+    "mood_happy": "超棒",
+    "mood_good": "不错",
+    "mood_ok": "还行",
+    "mood_tired": "累了",
+    "check_in_success": "打卡成功！",
+    "live_photo_hint": "长按播放动态照片"
+  },
+
+  "vocab_academy": {
+    "title": "词汇学堂",
+    "subtitle": "Tennis Vocab Academy",
+    "search_hint": "搜索网球词汇...",
+    "flip_hint": "点击卡片翻转",
+    "listen": "发音",
+    "favorite": "收藏",
+    "favorited": "已收藏",
+    "category_all": "全部",
+    "category_technique": "技术动作",
+    "category_tactics": "战术策略",
+    "category_rules": "规则裁判",
+    "category_equipment": "装备器材",
+    "category_culture": "网球文化",
+    "trivia_label": "趣味小知识",
+    "principle_label": "技术原理",
+    "no_favorites": "还没有收藏词汇哦，去词汇学堂逛逛吧 🌱"
+  },
+
+  "coach": {
+    "title": "教练点评",
+    "bind_title": "绑定教练",
+    "invite_code": "邀请码",
+    "invite_code_hint": "输入教练的邀请码",
+    "bind_button": "绑定",
+    "bound_success": "教练绑定成功！",
+    "send_to_coach": "发送给教练交作业",
+    "send_success": "已发送给教练",
+    "waiting_feedback": "等待教练点评...",
+    "play_voice": "播放语音",
+    "stt_toggle": "转文字",
+    "video_comment": "视频弹幕",
+    "record_voice": "录制点评",
+    "no_coach": "还未绑定教练",
+    "unbind": "解绑教练"
+  },
+
+  "practice": {
+    "title": "训练日志",
+    "new_practice": "记录训练",
+    "drill_type": "练习科目",
+    "duration": "训练时长",
+    "duration_min": "分钟",
+    "self_rating": "自评得分",
+    "notes": "今日心得",
+    "notes_hint": "写下今天的训练感受...",
+    "upload_video": "上传训练视频",
+    "slow_motion": "慢动作拆解",
+    "speed_normal": "正常",
+    "speed_slow": "0.5x",
+    "speed_very_slow": "0.25x",
+    "save": "保存记录",
+    "history": "训练历史"
+  },
+
+  "match": {
+    "title": "比赛记录",
+    "new_match": "记录比赛",
+    "opponent": "对手名字",
+    "score": "比分",
+    "court_type": "场地类型",
+    "grass": "草地",
+    "clay": "红土",
+    "hard": "硬地",
+    "winner": "制胜分",
+    "unforced_error": "非受迫失误",
+    "double_fault": "双误",
+    "stats_title": "技术统计",
+    "save": "保存比赛",
+    "history": "比赛历史",
+    "vs": "VS",
+    "result_win": "胜",
+    "result_loss": "负"
+  },
+
+  "skill_tree": {
+    "title": "技术树",
+    "subtitle": "我的网球藤蔓",
+    "baseline": "底线",
+    "net_play": "网前",
+    "serve_return": "发接发",
+    "forehand": "正手",
+    "backhand": "反手",
+    "volley": "截击",
+    "overhead": "高压",
+    "serve": "发球",
+    "return": "接发",
+    "approach_shot": "随球上网",
+    "drop_shot": "放小球",
+    "lob": "挑高球",
+    "ntpr_title": "NTRP 评级",
+    "ntpr_estimated": "预计等级",
+    "slider_hint": "拖动滑块评估你的水平",
+    "fruit_hint": "收藏的词汇会变成金色果实挂在这里哦 ⭐"
+  },
+
+  "insights": {
+    "title": "数据分析",
+    "subtitle": "AI 洞察",
+    "radar_title": "技术六边形",
+    "weakness": "短板",
+    "strength": "强项",
+    "ai_coach_title": "AI 教练说",
+    "weekly_summary": "本周总结",
+    "monthly_trend": "月度趋势",
+    "total_hours": "累计训练",
+    "hours_unit": "小时"
+  },
+
+  "profile": {
+    "title": "我的",
+    "username": "昵称",
+    "ntpr_level": "NTRP 等级",
+    "language": "语言",
+    "language_switch": "中 / EN",
+    "settings": "设置",
+    "about": "关于",
+    "feedback": "意见反馈"
+  },
+
+  "common": {
+    "cancel": "取消",
+    "confirm": "确认",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "loading": "加载中...",
+    "empty": "暂无数据",
+    "retry": "重试",
+    "back": "返回",
+    "close": "关闭"
+  }
+}

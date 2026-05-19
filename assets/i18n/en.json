@@ -1,0 +1,159 @@
+{
+  "app_name": "TennisSprout",
+  "app_name_sub": "网球发芽了",
+
+  "bottom_nav": {
+    "home": "Home",
+    "vocab": "Vocab",
+    "practice": "Practice",
+    "match": "Match",
+    "insights": "Insights"
+  },
+
+  "daily_status": {
+    "title": "Daily Status",
+    "upload_photo": "Upload Photo",
+    "upload_hint": "Capture your tennis vibe today 📸",
+    "streak_count": "Streak",
+    "day": "days",
+    "mood_happy": "Amazing",
+    "mood_good": "Good",
+    "mood_ok": "Alright",
+    "mood_tired": "Tired",
+    "check_in_success": "Check-in done!",
+    "live_photo_hint": "Long press to play Live Photo"
+  },
+
+  "vocab_academy": {
+    "title": "Vocab Academy",
+    "subtitle": "Tennis Vocab Academy",
+    "search_hint": "Search tennis terms...",
+    "flip_hint": "Tap card to flip",
+    "listen": "Listen",
+    "favorite": "Favorite",
+    "favorited": "Favorited",
+    "category_all": "All",
+    "category_technique": "Technique",
+    "category_tactics": "Tactics",
+    "category_rules": "Rules & Umpiring",
+    "category_equipment": "Equipment",
+    "category_culture": "Tennis Culture",
+    "trivia_label": "Trivia",
+    "principle_label": "How It Works",
+    "no_favorites": "No favorites yet. Discover words in the Vocab Academy 🌱"
+  },
+
+  "coach": {
+    "title": "Coach Feedback",
+    "bind_title": "Bind Coach",
+    "invite_code": "Invite Code",
+    "invite_code_hint": "Enter your coach's invite code",
+    "bind_button": "Bind",
+    "bound_success": "Coach bound successfully!",
+    "send_to_coach": "Send to Coach",
+    "send_success": "Sent to coach",
+    "waiting_feedback": "Waiting for coach feedback...",
+    "play_voice": "Play Voice",
+    "stt_toggle": "Text",
+    "video_comment": "Video Comments",
+    "record_voice": "Record Feedback",
+    "no_coach": "No coach bound yet",
+    "unbind": "Unbind Coach"
+  },
+
+  "practice": {
+    "title": "Practice Log",
+    "new_practice": "Log Practice",
+    "drill_type": "Drill Type",
+    "duration": "Duration",
+    "duration_min": "min",
+    "self_rating": "Self Rating",
+    "notes": "Notes",
+    "notes_hint": "Write down how practice felt today...",
+    "upload_video": "Upload Practice Video",
+    "slow_motion": "Slow Motion",
+    "speed_normal": "Normal",
+    "speed_slow": "0.5x",
+    "speed_very_slow": "0.25x",
+    "save": "Save Log",
+    "history": "Practice History"
+  },
+
+  "match": {
+    "title": "Match Recorder",
+    "new_match": "Log Match",
+    "opponent": "Opponent",
+    "score": "Score",
+    "court_type": "Surface",
+    "grass": "Grass",
+    "clay": "Clay",
+    "hard": "Hard",
+    "winner": "Winner",
+    "unforced_error": "UE",
+    "double_fault": "DF",
+    "stats_title": "Match Stats",
+    "save": "Save Match",
+    "history": "Match History",
+    "vs": "vs",
+    "result_win": "W",
+    "result_loss": "L"
+  },
+
+  "skill_tree": {
+    "title": "Skill Tree",
+    "subtitle": "My Tennis Vine",
+    "baseline": "Baseline",
+    "net_play": "Net Play",
+    "serve_return": "Serve & Return",
+    "forehand": "Forehand",
+    "backhand": "Backhand",
+    "volley": "Volley",
+    "overhead": "Overhead",
+    "serve": "Serve",
+    "return": "Return",
+    "approach_shot": "Approach Shot",
+    "drop_shot": "Drop Shot",
+    "lob": "Lob",
+    "ntpr_title": "NTRP Rating",
+    "ntpr_estimated": "Estimated Level",
+    "slider_hint": "Drag slider to rate your level",
+    "fruit_hint": "Favorited words appear as golden fruits on the vine ⭐"
+  },
+
+  "insights": {
+    "title": "Insights",
+    "subtitle": "AI Insights",
+    "radar_title": "Skill Hexagon",
+    "weakness": "Weakness",
+    "strength": "Strength",
+    "ai_coach_title": "AI Coach Says",
+    "weekly_summary": "Weekly Summary",
+    "monthly_trend": "Monthly Trend",
+    "total_hours": "Total Practice",
+    "hours_unit": "hrs"
+  },
+
+  "profile": {
+    "title": "Profile",
+    "username": "Nickname",
+    "ntpr_level": "NTRP Level",
+    "language": "Language",
+    "language_switch": "中 / EN",
+    "settings": "Settings",
+    "about": "About",
+    "feedback": "Feedback"
+  },
+
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "empty": "No data yet",
+    "retry": "Retry",
+    "back": "Back",
+    "close": "Close"
+  }
+}
