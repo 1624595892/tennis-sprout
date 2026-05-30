@@ -6,9 +6,11 @@ import 'config/theme.dart';
 import 'config/routes.dart';
 import 'i18n/app_localizations.dart';
 import 'providers/locale_provider.dart';
-import 'screens/home_screen.dart';
+import 'screens/main_shell.dart';
 import 'screens/vocab_academy_screen.dart';
 import 'screens/login_screen.dart';
+import 'screens/practice_log_screen.dart';
+import 'screens/growth_trajectory_screen.dart';
 
 class TennisSproutApp extends StatelessWidget {
   const TennisSproutApp({super.key});
@@ -50,7 +52,7 @@ class TennisSproutApp extends StatelessWidget {
   Route<dynamic>? _onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.home:
-        return _buildRoute(const HomeScreen(), settings);
+        return _buildRoute(const MainShell(), settings);
 
       case AppRoutes.vocabAcademy:
         return _buildRoute(const VocabAcademyScreen(), settings);
@@ -59,7 +61,10 @@ class TennisSproutApp extends StatelessWidget {
         return _buildRoute(const _PlaceholderScreen(title: 'Skill Tree'), settings);
 
       case AppRoutes.practiceLog:
-        return _buildRoute(const _PlaceholderScreen(title: 'Practice Log'), settings);
+        return _buildRoute(PracticeLogScreen(initialDate: settings.arguments as DateTime?), settings);
+
+      case AppRoutes.growthTrajectory:
+        return _buildRoute(const GrowthTrajectoryScreen(), settings);
 
       case AppRoutes.matchRecorder:
         return _buildRoute(const _PlaceholderScreen(title: 'Match Recorder'), settings);
@@ -77,7 +82,7 @@ class TennisSproutApp extends StatelessWidget {
         return _buildRoute(const LoginScreen(), settings);
 
       default:
-        return _buildRoute(const HomeScreen(), settings);
+        return _buildRoute(const MainShell(), settings);
     }
   }
 

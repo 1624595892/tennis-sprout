@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Douyin musical-note d-mark -->
+  <defs>
+    <linearGradient id="douyinGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B8D062"/>
+      <stop offset="100%" stop-color="#5E891B"/>
+    </linearGradient>
+  </defs>
+  <!-- Note head -->
+  <ellipse cx="14" cy="34" rx="11" ry="10" fill="url(#douyinGrad)"/>
+  <!-- Stem -->
+  <rect x="22" y="4" width="4.5" height="30" rx="2.25" fill="url(#douyinGrad)"/>
+  <!-- Upper flag -->
+  <path d="M 26.5 4 Q 42 14 46 6" fill="none" stroke="url(#douyinGrad)" stroke-width="4" stroke-linecap="round"/>
+  <!-- Lower flag -->
+  <path d="M 26.5 14 Q 40 24 44 16" fill="none" stroke="url(#douyinGrad)" stroke-width="4" stroke-linecap="round"/>
+</svg>

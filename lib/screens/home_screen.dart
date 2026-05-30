@@ -14,6 +14,52 @@ import '../widgets/common/paper_background.dart';
 import '../widgets/common/sticker_card.dart';
 import '../widgets/common/hand_drawn_divider.dart';
 
+// ═══════════════════════════════════════════════
+// GRAND SLAM — court skin configs
+// ═══════════════════════════════════════════════
+enum GrandSlam { ao, rg, wb, us }
+
+extension GrandSlamSkin on GrandSlam {
+  String get label {
+    switch (this) {
+      case GrandSlam.ao: return '澳网';
+      case GrandSlam.rg: return '法网';
+      case GrandSlam.wb: return '温网';
+      case GrandSlam.us: return '美网';
+    }
+  }
+
+  String get flag {
+    switch (this) {
+      case GrandSlam.ao: return '🇦🇺';
+      case GrandSlam.rg: return '🇫🇷';
+      case GrandSlam.wb: return '🇬🇧';
+      case GrandSlam.us: return '🇺🇸';
+    }
+  }
+
+  Color get courtColor {
+    switch (this) {
+      case GrandSlam.ao: return const Color(0xFF8FB7DB);
+      case GrandSlam.rg: return const Color(0xFFD67B66);
+      case GrandSlam.wb: return const Color(0xFF769471);
+      case GrandSlam.us: return const Color(0xFF5C78A4);
+    }
+  }
+
+  Color get lineColor {
+    switch (this) {
+      case GrandSlam.ao: return Colors.white.withValues(alpha: 0.55);
+      case GrandSlam.rg: return Colors.white.withValues(alpha: 0.40);
+      case GrandSlam.wb: return AppColors.white.withValues(alpha: 0.50);
+      case GrandSlam.us: return AppColors.yellowGreen.withValues(alpha: 0.55);
+    }
+  }
+
+  bool get showStrawberry => this == GrandSlam.wb;
+  bool get showClayParticles => this == GrandSlam.rg;
+}
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -58,49 +104,32 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         foregroundColor: AppColors.pakistanGreen,
         elevation: 2,
         shadowColor: AppColors.yellowGreen.withValues(alpha: 0.3),
-        title: SizedBox(
-          width: double.infinity,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              // Pill button — left-aligned, auto-sized
-              Align(
-                alignment: Alignment.centerLeft,
-                child: _UserPillButton(
-                  isLoggedIn: userProvider.isLoggedIn,
-                  username: userProvider.username,
-                  isZh: isZh,
-                ),
+        centerTitle: true,
+        leading: _UserIconButton(
+          isLoggedIn: userProvider.isLoggedIn,
+          username: userProvider.username,
+          isDouyinBound: userProvider.isDouyinBound,
+          avatarUrl: userProvider.user?.avatarUrl,
+          isZh: isZh,
+        ),
+        title: const Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _SproutIcon(),
+            SizedBox(width: 6),
+            Text(
+              'TENNIS Sprout',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w900,
+                color: AppColors.pakistanGreen,
+                letterSpacing: -0.3,
               ),
-              // Centered title with sprout icons
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 80),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _SproutIcon(),
-                    SizedBox(width: 6),
-                    Flexible(
-                      child: Text(
-                        'TENNIS Sprout',
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w900,
-                          color: AppColors.pakistanGreen,
-                          letterSpacing: -0.3,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 6),
-                    _SproutIcon(),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+            SizedBox(width: 6),
+            _SproutIcon(),
+          ],
         ),
         actions: [
           _LanguageSwitch(isZh: isZh, localeProvider: localeProvider),
@@ -118,9 +147,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               const SizedBox(height: 16),
 
               // ═════════════════════════════════════════
-              // CENTER — Logo with floating mini tennis balls
+              // CENTER — Mascot + Grand Slam court mat
               // ═════════════════════════════════════════
-              _AnimatedLogoSection(
+              _GrandSlamLogoSection(
                 runController: _runController,
                 bounceController: _bounceController,
               ),
@@ -177,6 +206,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               const SizedBox(height: 14),
 
               _FeatureCard(
+                emoji: '📅',
+                title: isZh ? '成长轨迹' : 'Growth Trajectory',
+                subtitle: isZh ? '日历回溯每一次挥拍' : 'Calendar view of every session',
+                color: AppColors.mintGreen,
+                onTap: () => Navigator.pushNamed(context, '/growth-trajectory'),
+                trailing: Consumer<PracticeProvider>(
+                  builder: (context, p, _) => _StatBadge(
+                    value: '${p.loggedDates.length}',
+                    unit: isZh ? '天' : 'd',
+                    color: AppColors.mintGreen,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 14),
+
+              _FeatureCard(
                 emoji: '🏆',
                 title: isZh ? '比赛记录' : 'Match Recorder',
                 subtitle: isZh ? '追踪每场比赛数据' : 'Track match stats',
@@ -215,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 onTap: () => Navigator.pushNamed(context, '/insights'),
               ),
 
-              const SizedBox(height: 80),
+              const SizedBox(height: 24),
             ],
           ),
         ),
@@ -225,39 +270,111 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 }
 
 // ═══════════════════════════════════════════════
-// ANIMATED LOGO SECTION
-// Running mascot with limbs + bouncing mini balls clustered below
+// GRAND SLAM LOGO SECTION
+// Mascot standing on a Grand Slam court mat with bouncing balls + capsule switcher
 // ═══════════════════════════════════════════════
-class _AnimatedLogoSection extends StatelessWidget {
+class _GrandSlamLogoSection extends StatefulWidget {
   final AnimationController runController;
   final AnimationController bounceController;
 
-  const _AnimatedLogoSection({
+  const _GrandSlamLogoSection({
     required this.runController,
     required this.bounceController,
   });
 
   @override
+  State<_GrandSlamLogoSection> createState() => _GrandSlamLogoSectionState();
+}
+
+class _GrandSlamLogoSectionState extends State<_GrandSlamLogoSection> {
+  GrandSlam _selected = GrandSlam.ao;
+
+  void _selectCourt(GrandSlam gs) {
+    if (gs == _selected) return;
+    setState(() => _selected = gs);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: Listenable.merge([runController, bounceController]),
+      animation: Listenable.merge([widget.runController, widget.bounceController]),
       builder: (context, child) {
-        final runT = runController.value;
-        final bounceT = bounceController.value;
+        final runT = widget.runController.value;
+        final bounceT = widget.bounceController.value;
 
         return LayoutBuilder(
           builder: (context, constraints) {
+            final centerX = constraints.maxWidth / 2;
             return SizedBox(
-              height: 360,
+              height: 480,
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  ..._buildBouncingBalls(bounceT, constraints.maxWidth / 2),
+                  // ── Layer 1: Court surface (behind balls) ──
                   Positioned(
-                    top: 60,
+                    top: 320,
+                    left: centerX - 195,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeOutCubic,
+                      width: 390,
+                      height: 88,
+                      decoration: BoxDecoration(
+                        color: _selected.courtColor.withValues(alpha: 0.55),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: _selected.courtColor.withValues(alpha: 0.8),
+                          width: 1.2,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: _selected.courtColor.withValues(alpha: 0.18),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: CustomPaint(
+                        painter: _CourtLinePainter(
+                          courtColor: _selected.courtColor,
+                          lineColor: _selected.lineColor,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // Easter egg: clay particles (Roland Garros)
+                  if (_selected.showClayParticles)
+                    ..._buildClayParticles(centerX),
+
+                  // Easter egg: strawberry bubble (Wimbledon)
+                  if (_selected.showStrawberry)
+                    Positioned(
+                      top: 16,
+                      left: centerX + 44,
+                      child: _StrawberryBubble(runT: runT),
+                    ),
+
+                  // ── Layer 2: Bouncing mini balls ──
+                  ..._buildBouncingBalls(bounceT, centerX),
+
+                  // ── Layer 3: Running mascot ──
+                  Positioned(
+                    top: 46,
                     left: 0,
                     right: 0,
                     child: Center(child: _RunningMascot(runT: runT)),
+                  ),
+
+                  // ── Layer 4: Court switcher dots ──
+                  Positioned(
+                    top: 422,
+                    left: 0,
+                    right: 0,
+                    child: _GrandSlamDots(
+                      selected: _selected,
+                      onSelect: _selectCourt,
+                    ),
                   ),
                 ],
               ),
@@ -270,26 +387,25 @@ class _AnimatedLogoSection extends StatelessWidget {
 
   List<Widget> _buildBouncingBalls(double t, double centerX) {
     final configs = [
-      _BounceConfig(cx: -46, row: 0, size: 22, phase: 0.0),
+      _BounceConfig(cx: -52, row: 0, size: 22, phase: 0.0),
       _BounceConfig(cx: 0, row: 0, size: 26, phase: 0.22),
-      _BounceConfig(cx: 46, row: 0, size: 20, phase: 0.44),
-      _BounceConfig(cx: -30, row: 1, size: 20, phase: 0.58),
-      _BounceConfig(cx: 30, row: 1, size: 24, phase: 0.78),
-      _BounceConfig(cx: 2, row: 2, size: 18, phase: 0.12),
+      _BounceConfig(cx: 52, row: 0, size: 20, phase: 0.44),
+      _BounceConfig(cx: -34, row: 1, size: 20, phase: 0.58),
+      _BounceConfig(cx: 34, row: 1, size: 24, phase: 0.78),
     ];
 
-    const baseY = 290.0;
+    const baseY = 274.0;
 
     return configs.map((c) {
       final phase = (t + c.phase) % 1.0;
-      final bounce = pow(sin(phase * pi), 2).toDouble() * 24.0;
-      final y = baseY + c.row * 38 - bounce;
+      final bounce = pow(sin(phase * pi), 2).toDouble() * 18.0;
+      final y = baseY + c.row * 34 - bounce;
 
       return Positioned(
         left: centerX + c.cx - c.size / 2,
         top: y,
         child: Opacity(
-          opacity: 0.4 + (1 - (bounce / 24.0)) * 0.35,
+          opacity: 0.38 + (1 - (bounce / 18.0)) * 0.35,
           child: SizedBox(
             width: c.size,
             height: c.size,
@@ -298,6 +414,38 @@ class _AnimatedLogoSection extends StatelessWidget {
         ),
       );
     }).toList();
+  }
+
+  List<Widget> _buildClayParticles(double centerX) {
+    final rng = Random(42);
+    return List.generate(10, (i) {
+      final x = centerX - 100 + rng.nextDouble() * 200;
+      final baseY = 340.0 + rng.nextDouble() * 14;
+      return Positioned(
+        left: x,
+        top: baseY,
+        child: TweenAnimationBuilder<double>(
+          tween: Tween(begin: 0, end: 1),
+          duration: Duration(milliseconds: 600 + rng.nextInt(400)),
+          builder: (context, v, _) {
+            return Opacity(
+              opacity: (1 - v) * 0.5,
+              child: Transform.translate(
+                offset: Offset(sin(v * 2) * 10, -v * 14),
+                child: Container(
+                  width: 2.5 + rng.nextDouble() * 3,
+                  height: 2.5 + rng.nextDouble() * 3,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD67B66).withValues(alpha: 0.6),
+                    borderRadius: BorderRadius.circular(1.5),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    });
   }
 }
 
@@ -312,6 +460,149 @@ class _BounceConfig {
     required this.size,
     required this.phase,
   });
+}
+
+// ═══════════════════════════════════════════════
+// GRAND SLAM DOTS — 4 tiny court-color indicators
+// ═══════════════════════════════════════════════
+class _GrandSlamDots extends StatelessWidget {
+  final GrandSlam selected;
+  final void Function(GrandSlam) onSelect;
+
+  const _GrandSlamDots({required this.selected, required this.onSelect});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: GrandSlam.values.map((gs) {
+        final active = gs == selected;
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 6),
+          child: GestureDetector(
+            onTap: () => onSelect(gs),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOutCubic,
+              width: active ? 28 : 18,
+              height: active ? 28 : 18,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: active
+                    ? gs.courtColor
+                    : const Color(0xFFBAACEB).withValues(alpha: 0.35),
+                boxShadow: active
+                    ? [
+                        BoxShadow(
+                          color: gs.courtColor.withValues(alpha: 0.4),
+                          blurRadius: 6,
+                          offset: const Offset(0, 2),
+                        ),
+                      ]
+                    : null,
+              ),
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════
+// COURT LINE PAINTER — hand-drawn court lines on the mat
+// ═══════════════════════════════════════════════
+class _CourtLinePainter extends CustomPainter {
+  final Color courtColor;
+  final Color lineColor;
+
+  _CourtLinePainter({required this.courtColor, required this.lineColor});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = lineColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.2
+      ..strokeCap = StrokeCap.round;
+
+    // Centre service line (vertical)
+    canvas.drawLine(
+      Offset(size.width / 2, 8),
+      Offset(size.width / 2, size.height - 8),
+      paint,
+    );
+
+    // Net line (horizontal)
+    canvas.drawLine(
+      Offset(12, size.height / 2),
+      Offset(size.width - 12, size.height / 2),
+      paint,
+    );
+
+    // Outer border rounded rect
+    final borderPaint = Paint()
+      ..color = lineColor.withValues(alpha: 0.5)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(8, 4, size.width - 16, size.height - 8),
+        const Radius.circular(12),
+      ),
+      borderPaint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _CourtLinePainter old) =>
+      courtColor != old.courtColor || lineColor != old.lineColor;
+}
+
+// ═══════════════════════════════════════════════
+// STRAWBERRY BUBBLE — Wimbledon easter egg
+// ═══════════════════════════════════════════════
+class _StrawberryBubble extends StatelessWidget {
+  final double runT;
+  const _StrawberryBubble({required this.runT});
+
+  @override
+  Widget build(BuildContext context) {
+    final bob = sin(runT * 3 * pi) * 3.0;
+
+    return Transform.translate(
+      offset: Offset(0, bob),
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.coralRed.withValues(alpha: 0.15),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('🍓', style: TextStyle(fontSize: 18)),
+            const SizedBox(height: 2),
+            Text(
+              'Strawberries & Cream!',
+              style: TextStyle(
+                fontSize: 8,
+                fontWeight: FontWeight.w700,
+                color: AppColors.coralRed.withValues(alpha: 0.7),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 // ═══════════════════════════════════════════════
@@ -530,14 +821,18 @@ class _MiniTennisBallPainter extends CustomPainter {
 // ═══════════════════════════════════════════════
 // USER PILL BUTTON — login / username toggle
 // ═══════════════════════════════════════════════
-class _UserPillButton extends StatelessWidget {
+class _UserIconButton extends StatelessWidget {
   final bool isLoggedIn;
   final String username;
+  final bool isDouyinBound;
+  final String? avatarUrl;
   final bool isZh;
 
-  const _UserPillButton({
+  const _UserIconButton({
     required this.isLoggedIn,
     required this.username,
+    required this.isDouyinBound,
+    required this.avatarUrl,
     required this.isZh,
   });
 
@@ -554,8 +849,37 @@ class _UserPillButton extends StatelessWidget {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('🎾', style: TextStyle(fontSize: 40)),
+              if (avatarUrl != null && avatarUrl!.isNotEmpty)
+                ClipOval(
+                  child: Image.network(
+                    avatarUrl!,
+                    width: 56,
+                    height: 56,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) =>
+                        const Text('🎾', style: TextStyle(fontSize: 40)),
+                  ),
+                )
+              else
+                const Text('🎾', style: TextStyle(fontSize: 40)),
               const SizedBox(height: 12),
+              if (isDouyinBound)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF3A3A3C),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Text(
+                    '🎵 抖音认证',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.yellowGreen,
+                    ),
+                  ),
+                ),
+              if (isDouyinBound) const SizedBox(height: 8),
               Text(
                 isZh
                     ? '$username 的网球种子正在茁壮成长中！🌱'
@@ -592,44 +916,29 @@ class _UserPillButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => _onTap(context),
-      child: Container(
-        margin: const EdgeInsets.only(left: 4, top: 12, bottom: 12),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(TennisTheme.radiusFull),
-          border: Border.all(
-            color: AppColors.ultraViolet.withValues(alpha: 0.5),
-            width: 1.5,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.ultraViolet.withValues(alpha: 0.08),
-              blurRadius: 4,
-              offset: const Offset(1, 2),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              isLoggedIn ? Icons.person_rounded : Icons.lock_outline_rounded,
-              size: 13,
-              color: AppColors.ultraViolet,
-            ),
-            const SizedBox(width: 4),
-            Text(
-              isLoggedIn ? username : '登录',
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
+      child: SizedBox(
+        width: 48,
+        height: 48,
+        child: isDouyinBound && avatarUrl != null && avatarUrl!.isNotEmpty
+            ? Padding(
+                padding: const EdgeInsets.all(10),
+                child: ClipOval(
+                  child: Image.network(
+                    avatarUrl!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => const Icon(
+                      Icons.person_rounded,
+                      size: 22,
+                      color: AppColors.ultraViolet,
+                    ),
+                  ),
+                ),
+              )
+            : const Icon(
+                Icons.person_rounded,
+                size: 22,
                 color: AppColors.ultraViolet,
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

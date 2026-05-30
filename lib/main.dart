@@ -11,7 +11,7 @@ import 'providers/match_provider.dart';
 import 'providers/coach_provider.dart';
 import 'providers/user_provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Force portrait orientation for a consistent mobile experience
@@ -30,6 +30,10 @@ void main() {
     ),
   );
 
+  // Pre-warm providers that need disk I/O
+  final practiceProvider = PracticeProvider();
+  await practiceProvider.loadFromDisk();
+
   runApp(
     MultiProvider(
       providers: [
@@ -37,7 +41,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => VocabularyProvider()),
         ChangeNotifierProvider(create: (_) => DailyStatusProvider()),
         ChangeNotifierProvider(create: (_) => SkillTreeProvider()),
-        ChangeNotifierProvider(create: (_) => PracticeProvider()),
+        ChangeNotifierProvider.value(value: practiceProvider),
         ChangeNotifierProvider(create: (_) => MatchProvider()),
         ChangeNotifierProvider(create: (_) => CoachProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
